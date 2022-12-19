@@ -18,5 +18,9 @@ dependencies {
 	api "io.github.libktx:ktx-tiled:$ktxVersion"
 	api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 	api "org.projectlombok:lombok:$lombokVersion"
+	api "io.github.quillraven.fleks:Fleks:$fleksVersion"
+	api "com.kotcrab.vis:vis-ui:$visuiVersion"
+	api "com.kotcrab.vis:vis-ui:$visuiVersion:sources"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
 }
