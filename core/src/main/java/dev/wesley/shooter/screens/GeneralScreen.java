@@ -64,9 +64,7 @@ public class GeneralScreen implements KtxScreen {
 
     @Override
     public void show() {
-        logger.debug(() -> {
-            return "General Screen is being shown!";
-        });
+        logger.debug(() -> "General Screen is being shown!");
 
         Arrays.stream(world.getSystems()).forEach(intervalSystem -> {
             if (intervalSystem instanceof EventListener) {

@@ -21,6 +21,7 @@ dependencies {
 	api "io.github.quillraven.fleks:Fleks:$fleksVersion"
 	api "com.kotcrab.vis:vis-ui:$visuiVersion"
 	api "com.kotcrab.vis:vis-ui:$visuiVersion:sources"
+	api "io.github.libktx:ktx-vis:$ktxVersion"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
 }
