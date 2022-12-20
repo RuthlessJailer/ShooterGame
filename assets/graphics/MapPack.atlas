@@ -1,0 +1,34 @@
+
+MapPack.png
+size: 256, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+decor_exp
+  rotate: false
+  xy: 0, 28
+  size: 112, 140
+  orig: 112, 140
+  offset: 0, 0
+  index: -1
+fences_exp
+  rotate: false
+  xy: 112, 56
+  size: 112, 112
+  orig: 112, 112
+  offset: 0, 0
+  index: -1
+grass_exp
+  rotate: false
+  xy: 0, 0
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+plains_xp
+  rotate: false
+  xy: 0, 168
+  size: 168, 336
+  orig: 168, 336
+  offset: 0, 0
+  index: -1
