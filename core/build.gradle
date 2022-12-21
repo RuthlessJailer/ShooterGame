@@ -1,3 +1,7 @@
+plugins {
+	id 'maven-publish'
+}
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
 
@@ -24,4 +28,18 @@ dependencies {
 	api "io.github.libktx:ktx-vis:$ktxVersion"
 	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+}
+
+jar {}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			version = project.version.toString()
+			groupId = 'dev.wesley.shooter'
+			artifactId = 'core'
+
+			from components["kotlin"]
+		}
+	}
 }

@@ -29,6 +29,9 @@ buildscript {
 allprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
+
+	group = 'dev.weley.shooter'
+	version = '0.0.1'
 }
 
 configure(subprojects) {
@@ -56,6 +59,7 @@ configure(subprojects) {
 subprojects {
 	version = '0.0.1'
 	ext.appName = 'ShooterGame'
+	group = 'dev.wesley.shooter'
 	repositories {
 		mavenCentral()
 		maven { url 'https://s01.oss.sonatype.org' }

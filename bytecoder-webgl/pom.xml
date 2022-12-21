@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>dev.wesley.shooter</groupId>
+	<artifactId>bytecoder-webgl</artifactId>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<groovyBaseDir>${project.basedir}</groovyBaseDir>
+		<assetsFolder>${project.basedir}/../assets</assetsFolder>
+		<libgdx-proj.groupId>dev.wesley.shooter</libgdx-proj.groupId>
+		<libgdx-proj.artifactId>core</libgdx-proj.artifactId>
+		<kotlin.version>1.7.21</kotlin.version>
+		<bytecoder.version>2021-07-23</bytecoder.version>
+		<bytecoder-mavenplugin.backend>js
+			<!-- js or wasm_llvm -->
+		</bytecoder-mavenplugin.backend>
+
+	</properties>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.squins.libgdx.backends.bytecoder</groupId>
+			<artifactId>gdx-backend-bytecoder-shaded</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>${libgdx-proj.groupId}</groupId>
+			<artifactId>${libgdx-proj.artifactId}</artifactId>
+			<version>0.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.badlogicgames.gdx</groupId>
+					<artifactId>gdx</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+	<build>
+		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-maven-plugin</artifactId>
+				<version>${kotlin.version}</version>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>test-compile</id>
+						<goals>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>de.mirkosertic.bytecoder</groupId>
+				<artifactId>bytecoder-mavenplugin</artifactId>
+				<version>${bytecoder.version}</version>
+				<configuration>
+					<mainClass>main.Main</mainClass>
+					<backend>${bytecoder-mavenplugin.backend}</backend>
+					<filenamePrefix>main</filenamePrefix>
+					<enableExceptionHandling>false</enableExceptionHandling>
+					<optimizationLevel>ALL</optimizationLevel>
+					<minifyCompileResult>false</minifyCompileResult>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>execute</id>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<scripts>
+						<script><![CDATA[
+            log.info("Generation of assets");
+            def myBaseDir = project.properties['groovyBaseDir'].replace('\\','/');
+            def backend = project.properties['bytecoder-mavenplugin.backend'];
+            def assetSourceDirectory = new File(project.properties['assetsFolder']);
+            def outputDirectory = new File(myBaseDir + '/target/bytecoder/assets');
+            def generator = new com.squins.gdx.backends.bytecoder.preloader.PreloaderBundleGenerator(
+                assetSourceDirectory,
+                outputDirectory
+                );
+            generator.generate();
+            java.nio.file.Files.copy(new File(myBaseDir + "/prod/index-" + backend + ".html").toPath(),
+                                     new File(myBaseDir + "/target/bytecoder/index.html").toPath(),
+                                     java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                                     );
+            java.nio.file.Files.copy(new File(myBaseDir + "/prod/script-common.js").toPath(),
+                                     new File(myBaseDir + "/target/bytecoder/script-common.js").toPath(),
+                                     java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                                     );
+            log.info("Completed generation of assets");
+          ]]></script>
+					</scripts>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.groovy</groupId>
+						<artifactId>groovy-all</artifactId>
+						<version>3.0.6</version>
+						<type>pom</type>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>
