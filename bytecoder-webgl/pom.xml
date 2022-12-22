@@ -14,7 +14,7 @@
 		<libgdx-proj.groupId>dev.wesley.shooter</libgdx-proj.groupId>
 		<libgdx-proj.artifactId>core</libgdx-proj.artifactId>
 		<kotlin.version>1.7.21</kotlin.version>
-		<bytecoder.version>2021-07-23</bytecoder.version>
+		<bytecoder.version>2021-11-02</bytecoder.version>
 		<bytecoder-mavenplugin.backend>js
 			<!-- js or wasm_llvm -->
 		</bytecoder-mavenplugin.backend>
